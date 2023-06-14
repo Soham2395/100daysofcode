@@ -1,0 +1,31 @@
+class Solution {
+  public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+      const int n1 = nums1.size();
+      const int n2 = nums2.size();
+      if (n1 > n2)
+        return findMedianSortedArrays(nums2, nums1);
+
+      int l = 0;
+      int r = n1;
+
+      while (l <= r) {
+        const int a = (l + r) / 2;
+        const int b = (n1 + n2 + 1) / 2 - a;
+        const int m = a == 0 ? INT_MIN : nums1[a - 1];
+        const int n = b == 0 ? INT_MIN : nums2[b - 1];
+        const int o = a == n1 ? INT_MAX : nums1[a];
+        const int p = b == n2 ? INT_MAX : nums2[b];
+        if (m <= p && n <= o)
+          return (n1 + n2) % 2 == 0
+                  ? (max(m, n) + min(o, p)) * 0.5
+                  : max(m, n);
+        else if (m > p)
+          r = a - 1;
+        else
+          l = a + 1;
+    }
+
+      throw;
+  }
+};

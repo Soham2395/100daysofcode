@@ -1,0 +1,27 @@
+from typing import List
+
+class Solution:
+    def numOfWays(self, nums: List[int]) -> int:
+        def count_ways(arr):
+            if len(arr) <= 2:
+                return 1
+
+            root = arr[0]
+            left = [x for x in arr if x < root]
+            right = [x for x in arr if x > root]
+
+            left_count = count_ways(left)
+            right_count = count_ways(right)
+
+            return comb(len(arr) - 1, len(left)) * left_count * right_count
+
+        def comb(n, k):
+            if k > n - k:
+                k = n - k
+            res = 1
+            for i in range(k):
+                res *= n - i
+                res //= i + 1
+            return res
+
+        return (count_ways(nums) - 1) % (10**9 + 7)

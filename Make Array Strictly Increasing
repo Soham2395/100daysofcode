@@ -1,0 +1,30 @@
+from typing import List
+import bisect
+
+class Solution:
+    def makeArrayIncreasing(self, arr1: List[int], arr2: List[int]) -> int:
+        arr2.sort()
+        N = len(arr1)
+        memo = {}
+
+        def dp(i: int, prev: int) -> int:
+            if i == N:
+                return 0
+            if (i, prev) in memo:
+                return memo[(i, prev)]
+            
+            res = float('inf')
+            if arr1[i] > prev:
+                res = dp(i + 1, arr1[i])
+            
+            idx = bisect.bisect_right(arr2, prev)
+            if idx < len(arr2):
+                res = min(res, 1 + dp(i + 1, arr2[idx]))
+            
+            memo[(i, prev)] = res
+            return res
+        
+        min_ops = dp(0, float('-inf'))
+        
+        return min_ops if min_ops != float('inf') else -1
+

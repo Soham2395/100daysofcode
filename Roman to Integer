@@ -1,0 +1,18 @@
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        ans = 0
+        roman = [1, 5, 10, 50, 100, 500, 1000]
+        lookup = {'I': 0, 'V': 1, 'X': 2, 'L': 3, 'C': 4, 'D': 5, 'M': 6}
+
+        n = len(s)
+        prev = 0
+
+        for i in range(n - 1, -1, -1):
+            curr = lookup[s[i]]
+            if curr < prev:
+                ans -= roman[curr]
+            else:
+                ans += roman[curr]
+            prev = curr
+
+        return ans

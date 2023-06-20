@@ -1,0 +1,21 @@
+from typing import List
+
+class Solution:
+    def getAverages(self, nums: List[int], k: int) -> List[int]:
+        n = len(nums)
+        size = 2 * k + 1
+        ans = [-1] * n
+        if size > n:
+            return ans
+
+        summ = sum(nums[:size])
+        ans[k] = summ
+
+        for i in range(k + 1, n - k):
+            summ += nums[i + k] - nums[i - k - 1]
+            ans[i] = summ
+
+        for i in range(k, n - k):
+            ans[i] //= size
+
+        return ans

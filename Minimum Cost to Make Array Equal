@@ -1,0 +1,28 @@
+class Solution:
+    def minCost(self, nums: List[int], cost: List[int]) -> int:
+        def getCost(target: int, memo: Dict[int, int]) -> int:
+            if target in memo:
+                return memo[target]
+
+            total_cost = 0
+            for num, c in zip(nums, cost):
+                total_cost += abs(num - target) * c
+
+            memo[target] = total_cost
+            return total_cost
+
+        l = min(nums)
+        r = max(nums)
+        memo = {}
+
+        while l < r:
+            m = (l + r) // 2
+            cost1 = getCost(m, memo)
+            cost2 = getCost(m + 1, memo)
+
+            if cost1 < cost2:
+                r = m
+            else:
+                l = m + 1
+
+        return getCost(l, memo)

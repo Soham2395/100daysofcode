@@ -1,0 +1,39 @@
+from collections import Counter, defaultdict
+
+class Solution:
+    def findSubstring(self, s: str, words: List[str]) -> List[int]:
+        if len(s) == 0 or not words:
+            return []
+
+        k = len(words)
+        n = len(words[0])
+        ans = []
+        count = Counter(words)
+
+        for i in range(n):
+            left = i
+            curr_count = defaultdict(int)
+            word_count = 0
+
+            for j in range(i, len(s) - n + 1, n):
+                word = s[j:j + n]
+
+                if word in count:
+                    curr_count[word] += 1
+                    word_count += 1
+
+                    while curr_count[word] > count[word]:
+                        left_word = s[left:left + n]
+                        curr_count[left_word] -= 1
+                        word_count -= 1
+                        left += n
+
+                    if word_count == k:
+                        ans.append(left)
+
+                else:
+                    curr_count.clear()
+                    word_count = 0
+                    left = j + n
+
+        return ans

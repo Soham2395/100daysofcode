@@ -1,0 +1,23 @@
+class Solution:
+    def countRoutes(self, locations, start, finish, fuel):
+        kMod = 1_000_000_007
+        n = len(locations)
+        memo = [[-1] * (fuel + 1) for _ in range(n)]
+
+        def dp(i, fuel):
+            if fuel < 0:
+                return 0
+            if memo[i][fuel] != -1:
+                return memo[i][fuel]
+
+            res = 1 if i == finish else 0
+            for j in range(n):
+                if j == i:
+                    continue
+                res += dp(j, fuel - abs(locations[i] - locations[j]))
+                res %= kMod
+
+            memo[i][fuel] = res
+            return res
+
+        return dp(start, fuel)

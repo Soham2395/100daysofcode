@@ -1,0 +1,27 @@
+import heapq
+from typing import List
+
+class Solution:
+    def maxProbability(self, n: int, edges: List[List[int]], succProb: List[float], start: int, end: int) -> float:
+        g = [[] for _ in range(n)]
+        mh = [(-1.0, start)]
+        s = [False] * n
+
+        for i, ((u, v), p) in enumerate(zip(edges, succProb)):
+            g[u].append((v, p))
+            g[v].append((u, p))
+
+        while mh:
+            p, u = heapq.heappop(mh)
+            p *= -1
+            if u == end:
+                return p
+            if s[u]:
+                continue
+            s[u] = True
+            for v, ep in g[u]:
+                if s[v]:
+                    continue
+                heapq.heappush(mh, (-p * ep, v))
+
+        return 0

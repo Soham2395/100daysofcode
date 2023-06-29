@@ -1,0 +1,43 @@
+from collections import deque
+
+class Solution:
+    def shortestPathAllKeys(self, grid: List[str]) -> int:
+        directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        rows, cols = len(grid), len(grid[0])
+        all_keys = 0
+        start_row, start_col = 0, 0
+
+        for i in range(rows):
+            for j in range(cols):
+                if grid[i][j] == '@':
+                    start_row, start_col = i, j
+                elif grid[i][j].islower():
+                    all_keys |= (1 << (ord(grid[i][j]) - ord('a')))
+        
+        queue = deque([(start_row, start_col, 0, 0)])
+        visited = set([(start_row, start_col, 0)])
+        
+        while queue:
+            row, col, keys, distance = queue.popleft()
+
+            if keys == all_keys:
+                return distance
+            
+            for dx, dy in directions:
+                new_row, new_col = row + dx, col + dy
+
+                if 0 <= new_row < rows and 0 <= new_col < cols and grid[new_row][new_col] != '#':
+                    cell = grid[new_row][new_col]
+                    new_keys = keys
+
+                    if cell.islower() and not (keys & (1 << (ord(cell) - ord('a')))):
+                        new_keys |= (1 << (ord(cell) - ord('a')))
+                    
+                    if cell.isupper() and not (keys & (1 << (ord(cell) - ord('A')))):
+                        continue
+                    
+                    if (new_row, new_col, new_keys) not in visited:
+                        visited.add((new_row, new_col, new_keys))
+                        queue.append((new_row, new_col, new_keys, distance + 1))
+        
+        return -1

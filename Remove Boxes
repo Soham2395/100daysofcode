@@ -1,0 +1,23 @@
+from typing import List
+import functools
+
+class Solution:
+    def removeBoxes(self, boxes: List[int]) -> int:
+        @functools.lru_cache(None)
+        def dp(left: int, right: int, k: int) -> int:
+            if left > right:
+                return 0
+
+            while right > left and boxes[right - 1] == boxes[right]:
+                right -= 1
+                k += 1
+
+            ans = dp(left, right - 1, 0) + (k + 1) ** 2
+
+            for i in range(left, right):
+                if boxes[i] == boxes[right]:
+                    ans = max(ans, dp(left, i, k + 1) + dp(i + 1, right - 1, 0))
+
+            return ans
+
+        return dp(0, len(boxes) - 1, 0)

@@ -1,0 +1,49 @@
+from typing import List
+import collections
+
+class Solution:
+    def latestDayToCross(self, row: int, col: int, cells: List[List[int]]) -> int:
+        directions = [0, 1, 0, -1, 0]
+
+        def canWalk(day: int) -> bool:
+            grid = [[0] * col for _ in range(row)]
+            for i in range(day):
+                x, y = cells[i]
+                grid[x - 1][y - 1] = 1
+
+            queue = collections.deque()
+
+            for j in range(col):
+                if grid[0][j] == 0:
+                    queue.append((0, j))
+                    grid[0][j] = 1
+
+            while queue:
+                i, j = queue.popleft()
+                for k in range(4):
+                    x = i + directions[k]
+                    y = j + directions[k + 1]
+                    if x < 0 or x == row or y < 0 or y == col:
+                        continue
+                    if grid[x][y] == 1:
+                        continue
+                    if x == row - 1:
+                        return True
+                    queue.append((x, y))
+                    grid[x][y] = 1
+
+            return False
+
+        answer = 0
+        left = 1
+        right = len(cells) - 1
+
+        while left <= right:
+            mid = (left + right) // 2
+            if canWalk(mid):
+                answer = mid
+                left = mid + 1
+            else:
+                right = mid - 1
+
+        return answer

@@ -1,0 +1,24 @@
+from typing import List
+import collections
+
+class DetectSquares:
+    def __init__(self):
+        self.points = collections.defaultdict(collections.Counter)
+
+    def add(self, point: List[int]) -> None:
+        x, y = point
+        self.points[x][y] += 1
+
+    def count(self, point: List[int]) -> int:
+        x1, y1 = point
+        count = 0
+        for y3, count1 in self.points[x1].items():
+            if y1 != y3:
+                distance = abs(y1 - y3)
+                count2 = self.points[x1 + distance][y1]
+                count3 = self.points[x1 + distance][y3]
+                count += count1 * count2 * count3
+                count2 = self.points[x1 - distance][y1]
+                count3 = self.points[x1 - distance][y3]
+                count += count1 * count2 * count3
+        return count

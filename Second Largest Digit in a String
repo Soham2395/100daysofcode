@@ -1,0 +1,13 @@
+class Solution:
+    def secondHighest(self, s: str) -> int:
+        st = (set(s))
+        f1,s2=-1,-1
+        for i in st:
+            if i.isnumeric():
+                i=int(i)
+                if i>f1:
+                    s2=f1
+                    f1=i
+                elif i>s2 and i!=f1:
+                    s2=i
+        return s2

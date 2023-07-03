@@ -1,0 +1,9 @@
+class Solution:
+    def increasingBST(self, current_node: TreeNode, previous_node: TreeNode = None) -> TreeNode:
+        if not current_node:
+            return previous_node
+
+        result = self.increasingBST(current_node.left, current_node)
+        current_node.left = None
+        current_node.right = self.increasingBST(current_node.right, previous_node)
+        return result

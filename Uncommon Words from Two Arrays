@@ -1,0 +1,5 @@
+class Solution:
+    def uncommonFromSentences(self, A: str, B: str) -> List[str]:
+        cnt = collections.Counter((A + ' ' + B).split())
+        uncommon = [w for w, f in cnt.items() if f == 1]
+        return uncommon

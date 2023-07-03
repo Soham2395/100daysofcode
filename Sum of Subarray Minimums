@@ -1,0 +1,24 @@
+class Solution:
+    def sumSubarrayMins(self, arr: List[int]) -> int:
+        kMod = 1_000_000_007
+        n = len(arr)
+        ans = 0
+        stack = [] 
+        prevSmaller = [-1] * n
+        nextSmaller = [n] * n
+
+        for i in range(n):
+            while stack and arr[stack[-1]] > arr[i]:
+                index = stack.pop()
+                nextSmaller[index] = i
+            if stack:
+                prevSmaller[i] = stack[-1]
+            stack.append(i)
+
+        for i in range(n):
+            left_count = i - prevSmaller[i]
+            right_count = nextSmaller[i] - i
+            ans += arr[i] * left_count * right_count
+            ans %= kMod
+
+        return ans

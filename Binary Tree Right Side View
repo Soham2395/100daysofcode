@@ -1,0 +1,14 @@
+class Solution:
+  def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+    sol = []
+    def dfs(root: Optional[TreeNode], value: int) -> None:
+      if not root:
+        return
+
+      if value == len(sol):
+        sol.append(root.val)
+      dfs(root.right, value + 1)
+      dfs(root.left, value + 1)
+
+    dfs(root, 0)
+    return sol

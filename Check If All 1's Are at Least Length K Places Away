@@ -1,0 +1,18 @@
+class Solution:
+  def kLengthApart(self, nums: List[int], k: int) -> bool:
+    if k == 0:
+      return True
+
+    n = len(nums)
+
+    current = 0
+    next = 1
+
+    while current < n and next < n:
+      if nums[next] == 1:
+        if nums[current] == 1 and next - current <= k:
+          return False
+        current = next
+      next += 1
+
+    return True

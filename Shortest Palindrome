@@ -1,0 +1,9 @@
+class Solution:
+  def shortestPalindrome(self, s: str) -> str:
+    a = s[::-1]
+
+    for i in range(len(a)):
+      if s.startswith(a[i:]):
+        return a[:i] + s
+
+    return a + s

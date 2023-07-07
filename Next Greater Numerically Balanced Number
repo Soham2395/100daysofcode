@@ -1,0 +1,15 @@
+class Solution:
+  def nextBeautifulNumber(self, n: int) -> int:
+    def balance_num(num: int) -> bool:
+      count = [0] * 10
+      while num:
+        if num % 10 == 0:
+          return False
+        count[num % 10] += 1
+        num //= 10
+      return all(c == i for i, c in enumerate(count) if c)
+
+    n += 1
+    while not balance_num(n):
+      n += 1
+    return n

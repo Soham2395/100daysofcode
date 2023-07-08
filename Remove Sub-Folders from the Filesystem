@@ -1,0 +1,24 @@
+class Trie:
+    def __init__(self):
+        self.hmap={}
+        self.bool=False
+class Solution:
+    def removeSubfolders(self, folder: List[str]) -> List[str]:
+        root=Trie()
+        curr=root
+        ans=[]
+        folder.sort(key=lambda x:len(x))
+        for ind,path in enumerate(folder):
+            folderNames=path.split("/")[1:]
+            curr=root
+            for j in range(len(folderNames)):
+                if folderNames[j] not in curr.hmap:
+                    curr.hmap[folderNames[j]]=Trie()
+                else:
+                    if curr.hmap[folderNames[j]].bool==True:
+                        break
+                if j==len(folderNames)-1:
+                    curr.hmap[folderNames[j]].bool=True
+                    ans.append(path)
+                curr=curr.hmap[folderNames[j]]
+        return ans

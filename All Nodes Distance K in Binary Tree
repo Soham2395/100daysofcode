@@ -1,0 +1,42 @@
+class Solution:
+    def distanceK(self, root: TreeNode, target: TreeNode, k: int) -> List[int]:
+        dic = collections.defaultdict()
+        res = []
+        seen = set()
+        def setParent(root, parent):
+            if not root:
+                return 
+            
+            dic[root] = parent
+
+            setParent(root.left, root)
+            setParent(root.right, root)
+        
+
+        def bfs(root):
+            q = deque()
+            print(root.val)
+            q.append([root, 0])
+            while q:
+                n = len(q)
+                for i in range(n):
+                    node, d = q.popleft()
+                    if not node or node in seen:
+                        continue
+
+                    seen.add(node)
+
+                    if d == k:
+                        res.append(node.val)
+
+                    if node.left:
+                        q.append([node.left, d+1])
+                    if node.right:
+                        q.append([node.right, d+1])
+                    if node in dic:
+                        q.append([dic[node], d+1])
+                    
+        setParent(root, None)
+        bfs(target)
+        return res
+                

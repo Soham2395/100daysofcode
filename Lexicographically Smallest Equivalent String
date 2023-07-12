@@ -1,0 +1,17 @@
+class Solution:
+    def smallestEquivalentString(self, s1: str, s2: str, baseStr: str) -> str:
+        ds = defaultdict(list)
+        for a in list(string.ascii_lowercase):
+            ds[a] = [a,[a]]
+        def update(p1,p2):
+            max_val = max(ds[p1][0],ds[p2][0])
+            min_val = min(ds[p1][0],ds[p2][0])
+            if ds[max_val][1]:
+                for i in ds[max_val][1]:
+                    ds[i][0] = ds[min_val][0]
+                ds[min_val][1].extend( ds[max_val][1])
+        for c_1,c_2 in zip(s1,s2):
+            p_1,p_2 = c_1,c_2 
+            if ds[p_1][0] != ds[p_2][0]:
+                update(p_1,p_2)
+        return "".join([ds[c][0] for c in baseStr])

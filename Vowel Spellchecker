@@ -1,0 +1,33 @@
+class Solution:
+    def spellchecker(self, wordlist: List[str], queries: List[str]) -> List[str]:
+        set_words = set(wordlist)
+        dict_words = dict()
+        for w in wordlist:
+            w_lower = w.lower()
+            w_key = (w_lower.replace("a", "_").replace("e", "_")
+                     .replace("i", "_").replace("o", "_").replace("u", "_"))
+            if w_key in dict_words:
+                for w_lower_, _ in dict_words[w_key]:
+                    if w_lower == w_lower_:
+                        break
+                else:
+                    dict_words[w_key].append((w_lower, w))
+            else:
+                dict_words[w_key] = [(w_lower, w)]
+
+        ans = [""] * len(queries)
+        for i, q in enumerate(queries):
+            if q in set_words:
+                ans[i] = q
+                continue
+            q_lower = q.lower()
+            q_key = (q_lower.replace("a", "_").replace("e", "_")
+                     .replace("i", "_").replace("o", "_").replace("u", "_"))
+            if q_key in dict_words:
+                for w_lower_, first_word in dict_words[q_key]:
+                    if q_lower == w_lower_:
+                        ans[i] = first_word
+                        break
+                else:
+                    ans[i] = dict_words[q_key][0][1]
+        return ans

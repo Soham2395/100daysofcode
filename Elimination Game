@@ -1,0 +1,12 @@
+class Solution:
+    def lastRemaining(self, n: int) -> int:
+
+        def eliminate(numbers_cnt, fwd, base, step):
+            if numbers_cnt == 1:
+                return base + 1
+            if fwd or numbers_cnt % 2 == 1:
+                base += step // 2
+            step *= 2
+            numbers_cnt = numbers_cnt // 2
+            return eliminate(numbers_cnt, not fwd, base, step)
+        return eliminate(n, True, 0, 2)

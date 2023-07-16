@@ -1,0 +1,10 @@
+class Solution:
+    def distributeCandies(self, candies: int, num_people: int) -> List[int]:
+        lis,i=num_people*[0],1
+        while candies>=i:
+            lis[(i-1)%num_people]+=i
+            candies-=i
+            i+=1
+        if candies>0:    
+            lis[(i-1)%num_people]+=candies
+        return lis

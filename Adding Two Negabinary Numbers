@@ -1,0 +1,28 @@
+class Solution:
+    def addNegabinary(self, arr1: List[int], arr2: List[int]) -> List[int]:
+        l1 = len(arr1)
+        l2 = len(arr2)
+        if l1 > l2:
+            arr2 = [0] * (l1-l2) + arr2
+        elif l1 < l2:
+            arr1 = [0] * (l2-l1) + arr1       
+        ans = [0] * (len(arr1) + 2)
+        arr1 = [0] * 2 + arr1
+        arr2 = [0] * 2 + arr2       
+        i = -1
+        while -i-1 < len(arr1):
+            ans[i] += arr1[i] + arr2[i]
+            if ans[i] == -1:
+                ans[i] = 1
+                ans[i-1] += 1
+            elif ans[i] == 2:
+                ans[i] = 0
+                ans[i-1] -= 1
+            elif ans[i] == 3:
+                ans[i] = 1
+                ans[i-1] -= 1             
+            i -= 1
+        for i in range(len(ans)):
+            if ans[i] == 1:
+                break
+        return ans[i:]

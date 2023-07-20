@@ -1,0 +1,13 @@
+class Solution:
+    def findTarget(self, root: Optional[TreeNode], k: int) -> bool:
+        if not root:return False
+        visit=set()
+        q=[root]
+        for i in q:
+            if (k-i.val) in visit:return True
+            visit.add(i.val)
+            if i.left:
+                q.append((i.left))
+            if i.right:
+                q.append(i.right)
+        return False

@@ -1,0 +1,15 @@
+class Solution:
+	def asteroidCollision(self, asteroids: List[int]) -> List[int]:
+		st = []
+		for a in asteroids:
+			if a>0:
+				st.append(a)
+			else:
+				while len(st)>0 and st[-1]>0 and st[-1]<abs(a):
+					st.pop()
+				if len(st)==0 or st[-1]<0:
+					st.append(a)
+				elif st[-1]==abs(a):
+					st.pop()
+
+		return st

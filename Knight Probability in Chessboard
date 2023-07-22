@@ -1,0 +1,24 @@
+class Solution:
+    def knightProbability(self, n: int, K: int, r: int, c: int) -> float:
+        def is_valid(x, y):
+            return 0 <= x < n and 0 <= y < n
+
+        dirs = [(1, 2), (2, 1), (2, -1), (1, -2), (-1, -2), (-2, -1), (-2, 1), (-1, 2)]
+        dp = [[0] * n for _ in range(n)]
+        dp[r][c] = 1
+
+        for _ in range(K):
+            new_dp = [[0] * n for _ in range(n)]
+            for i in range(n):
+                for j in range(n):
+                    for dx, dy in dirs:
+                        x = i + dx
+                        y = j + dy
+                        if is_valid(x, y):
+                            new_dp[i][j] += dp[x][y]
+            dp = new_dp
+
+        total_moves = 8 ** K
+        final_probability = sum(map(sum, dp)) / total_moves
+
+        return final_probability

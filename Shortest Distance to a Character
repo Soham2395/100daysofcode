@@ -1,0 +1,4 @@
+class Solution:
+    def shortestToChar(self, s: str, c: str) -> List[int]:
+        presentIndexes = [ i for i, val in enumerate(s) if val == c ]
+        return [min(abs(i - x) for x in presentIndexes) for i in range(0, len(s))]

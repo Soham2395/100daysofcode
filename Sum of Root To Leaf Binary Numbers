@@ -1,0 +1,8 @@
+class Solution:
+    def sumRootToLeaf(self, root: TreeNode) -> int:
+        return self.calcSum(root, 0)
+    def calcSum(self, root: TreeNode, n: int) -> int:
+        if(root == None): return 0
+        n = n << 1 | root.val
+        if(root.left == None and root.right == None): return n
+        return ( self.calcSum(root.left,n) + self.calcSum(root.right,n) )

@@ -1,0 +1,14 @@
+class Solution:
+    def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
+        def dfs(root, path):
+            nonlocal ans
+            if not root: return 
+            path = path + [str(root.val)]
+            if not root.left and not root.right:
+                ans.append('->'.join(path))
+            dfs(root.left, path)
+            dfs(root.right, path)
+        ans = []
+        dfs(root, [])
+
+        return ans

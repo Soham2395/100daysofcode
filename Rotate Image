@@ -1,0 +1,3 @@
+class Solution:
+    def rotate(self, m: List[List[int]]) -> None:
+        m[:] = [[row[i] for row in m[::-1]] for i in range(len(m))]

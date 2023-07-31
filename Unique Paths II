@@ -1,0 +1,21 @@
+class Solution:
+    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+        def findPaths(m, n, memo = {}):
+            key = f"{m},{n}"
+
+            if key in memo:
+                return memo[key]
+            if obstacleGrid[m-1][n-1] == 1:
+                return 0
+            if m == 0 or n == 0:
+                return 0
+            if m == 1 and n == 1:
+                return 1
+            memo[key] = findPaths(m - 1, n, memo) + findPaths(m, n -1, memo)
+
+            return memo[key]
+        
+        m = len(obstacleGrid)
+        n = len(obstacleGrid[0])
+        return findPaths(m, n)
+        

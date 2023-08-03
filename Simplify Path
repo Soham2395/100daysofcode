@@ -1,0 +1,10 @@
+class Solution:
+    def simplifyPath(self, path: str) -> str:
+      path = filter(lambda x: (x != '' and x != '.'), path.split('/'))
+      simplify = []
+      for dir in path:
+        if dir == '..':
+          len(simplify) and simplify.pop()
+        else:
+          simplify.append(dir)
+      return '/' + '/'.join(simplify)

@@ -1,0 +1,9 @@
+class Solution(object):
+    @cache
+    def generateTrees(self, n, v = 1):
+        result = []
+        for i in range(n):
+            lnodes = self.generateTrees(i,v) or [None]
+            rnodes = self.generateTrees(n-1-i,v+1+i) or [None]
+            result += [TreeNode(v+i,l,r) for l,r in product(lnodes, rnodes)]
+        return result

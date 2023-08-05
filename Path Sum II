@@ -1,0 +1,8 @@
+class Solution:
+    def pathSum(self, root: TreeNode, targetSum: int) -> List[List[int]]:
+        def dfs(n: TreeNode, s: int):
+            if (None, None) == (n.left, n.right) and s == targetSum:
+                yield [n.val]
+            else:
+                yield from ([n.val] + path for c in (n.left, n.right) if c for path in dfs(c, (s + c.val)))
+        return list(dfs(root, root.val)) if root else []

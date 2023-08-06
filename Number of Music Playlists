@@ -1,0 +1,7 @@
+from math import factorial as fac
+class Solution:
+    @cache
+    def numMusicPlaylists(self, n: int, goal: int, k: int) -> int:
+        if k==n-1 or n==goal:
+            return fac(n) % 1000000007
+        return ((n*self.numMusicPlaylists(n-1, goal-1, k) + self.numMusicPlaylists(n, goal-1, k) * (n - k)) )% 1000000007

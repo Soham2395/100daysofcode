@@ -1,0 +1,9 @@
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        @cache
+        def f(v, startIndex):
+            if v == 0:
+                return 1
+            return reduce(add, [f(v-coins[i], i) for i in range(startIndex, len(coins)) if coins[i] <= v], 0)
+
+        return f(amount, 0)

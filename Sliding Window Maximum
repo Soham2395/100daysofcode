@@ -1,0 +1,10 @@
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        h,ans  =[],[]
+        for i in range(k):heappush(h,(-nums[i],i))
+        ans.append(-h[0][0])
+        for i in range(k,len(nums)):
+            heappush(h, (-nums[i],i))    
+            while h and (i - h[0][1]) >=k:heappop(h)    
+            ans.append((-h[0][0]))
+        return ans

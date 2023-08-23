@@ -1,0 +1,3 @@
+class Solution:
+    def findCriticalAndPseudoCriticalEdges(self, n: int, e: List[List[int]]) -> List[List[int]]:
+        g,r=defaultdict(list),[[],[]];[(g[u].append((v,w)),g[v].append((u,w)))for u,v,w in e];f=lambda i,j:next((d[j]for _ in count()if not(q and(lambda p,u:all((setitem(d,v,max(d[u],w)),q.append((-d[v],v)))for v,w in g[u]if -p<=d[u]and(u!=i or v!=j)and d[v]>max(d[u],w)))(*q.popleft()))),(d:=[inf]*len(g),q:=deque([(0,i)]),setitem(d,i,0)));[r[w==m].append(i)for i,(u,v,w)in enumerate(e)if(m:=f(u,v))>=w];return r

@@ -1,0 +1,17 @@
+class Solution:
+    def findBottomLeftValue(self, root: Optional[TreeNode]) -> int:
+        self.leftmostelm = root.val
+        self.depth = 0
+        self.path = 'z'
+        self.find(root)
+        return self.leftmostelm
+    
+    def find(self,root,s='r',d=0):
+        if root == None:
+            return
+        if self.depth < d or ( self.path > s):
+            self.depth = d
+            self.path = s
+            self.leftmostelm = root.val
+        self.find(root.left,s+'l',d+1)
+        self.find(root.right,s+'r',d+1)

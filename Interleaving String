@@ -1,0 +1,4 @@
+class Solution:
+    @cache
+    def isInterleave(self, a: str, b: str, c: str) -> bool:
+        return any(c[:1]==x[:1]and self.isInterleave(x[1:],y,c[1:])for x,y in((a,b),(b,a)))if(a and b)else(a or b or'')==c

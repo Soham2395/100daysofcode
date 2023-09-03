@@ -1,0 +1,9 @@
+class Solution:
+    def minimumReplacement(self, nums: List[int]) -> int:
+        prev, ans = nums.pop(), 0  
+        while nums:               
+            num = nums.pop()      
+            cnt = (num - 1)//prev  
+            prev = num // (cnt+1)  
+            ans+= cnt                               
+        return ans     

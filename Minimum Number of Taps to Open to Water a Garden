@@ -1,0 +1,17 @@
+class Solution:
+    def minTaps(self, n: int, ranges: List[int]) -> int:
+
+        pos, ans = 0, 0
+        heap = [(i-r,i+r) for i, r in enumerate(ranges)]
+        heapify(heap)
+        
+        while pos < n:
+            mx = 0
+            while heap and heap[0][0] <= pos:
+                mx = max(mx,heappop(heap)[1])
+                
+            if mx == 0: return -1
+            pos = mx
+            ans+= 1
+            
+        return ans

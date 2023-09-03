@@ -1,0 +1,12 @@
+class Solution:
+    def canCross(self, stones: List[int]) -> bool:
+        t = stones[-1]
+        stones = set(stones)
+        @cache
+        def rec(loc, j):
+            nonlocal stones, t
+            if loc not in stones or j == 0:
+                return False
+            return (loc == t) or rec(loc+j-1, j-1) or rec(loc+j, j) or rec(loc+j+1, j+1)
+        
+        return rec(1, 1)

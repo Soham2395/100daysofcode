@@ -1,0 +1,11 @@
+class Solution:
+    def groupThePeople(self, groupSizes: List[int]) -> List[List[int]]:
+        my_dict = defaultdict(list)
+        for i in range(len(groupSizes)):
+            my_dict[groupSizes[i]].append(i)
+        res = []
+        for key, key_list in my_dict.items():
+            for i in range(0,len(key_list),key):
+                res.append(key_list[i:i+key])
+                
+        return res
